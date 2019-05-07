@@ -1,4 +1,5 @@
 // Main js file
 
 // another js file (example)
-import './common.js'
+import './components/comments.js'
+import './components/landscape.js'

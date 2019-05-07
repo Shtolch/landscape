@@ -61,12 +61,13 @@
       .seting{
         display: none;
         transition: all 3s;
-        transform: translateX(300px);
+
         
       }
       .card-comments-text{
         display: flex;
         flex-direction: column;
+        padding: 16px;
         p{
           margin: 0;
           
