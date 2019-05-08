@@ -5,6 +5,8 @@
   .card{
     display: flex;
     flex-direction: column;
+    max-width: 536px;
+    flex-wrap: nowrap;
     
     .card-info{
       display: flex;
@@ -64,10 +66,14 @@
 
         
       }
+      .setings{
+        display: flex;
+      }
       .card-comments-text{
         display: flex;
         flex-direction: column;
         padding: 16px;
+        flex-wrap: nowrap;
         p{
           margin: 0;
           

@@ -45,7 +45,6 @@ Vue.component('landscape', {
         content: $('#add-comment').val()
       }
       this.comments.unshift(itemAdd);
-      console.log(itemAdd)
       $('#add-comment').val('');
     },
     editFrom(comment) {
@@ -54,9 +53,12 @@ Vue.component('landscape', {
     },
     removeFrom(item) {
       console.log(item)
-      console.log(this.comments)
-      this.comments.id.filter(function (item) {
-        return this.comments.id != this.comments.item
+      console.log(this.comments[0].id)
+
+      this.comment.forEach(function(id){
+        id.filter(function(item) {
+          return console.log(id != item)
+        });
       })
     }
 
@@ -101,11 +103,15 @@ Vue.component('comment', {
 		img: String,
 		title: String,
     content: String,
-    id: String
+    id: String,
+
+    show: true
+    
 	},
   methods:{
     openSetings(){
         $('.seting').css('display', 'block')
+        
     },
     editComment() {
       this.$emit('edit', this.content);
@@ -117,8 +123,8 @@ Vue.component('comment', {
 
   },
   template: `
-    <div class="card-comments" @click="openSetings">
-      <div class="seting" >
+    <div class="card-comments" v-on:click="show = !show">
+      <div  class="setings"v-if="show">
           <button @click="removeComment"> <img src="./assets/img/remove.png" alt="remove-icon"> remove</button>
           <button @click="editComment"> <img src="./assets/img/edit.png" alt="edit-icon"> edit</button>
       </div>
