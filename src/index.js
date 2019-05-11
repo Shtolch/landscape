@@ -30,7 +30,9 @@ Vue.component('landscape', {
           img: './assets/img/jasonx2.png',
           content: ' Thats awesome!'
         }
-      ]
+      ],
+      isActive: false,
+      isRemove: false,
     } 
   },
   methods:{ 
@@ -47,22 +49,24 @@ Vue.component('landscape', {
       this.comments.unshift(itemAdd);
       $('#add-comment').val('');
     },
-    editFrom(comment) {
+    editFrom(comment) {     
+      this.isActive = true
       $('#edit-comment').val(comment);
+
+    
+    },
+    editFromApplly(){
+      console.log( $('#edit-comment').val() )
+      this.isActive = false
       
     },
-    removeFrom(item) {
-      console.log(item)
-      console.log(this.comments[0].id)
-
-      this.comment.forEach(function(id){
-        id.filter(function(item) {
-          return console.log(id != item)
-        });
+    removeFrom(idComment) {
+      this.isRemove = true;
+      
+      this.comments =  this.comments.filter(function(el) {
+          return el.id !== idComment
       })
-    }
-
-  
+    },
   },
   template: `
     <div class="card">  
@@ -78,15 +82,21 @@ Vue.component('landscape', {
             <input type="text" placeholder="Write a new comment" id="add-comment">
             <button @click="addComment"> <img src="./assets/img/paper-plane.png" alt="paper-plane-icon"> Send</button>
         </div>
-        <div class="card-form-edit">
+        <div class="card-form-edit" v-if="isActive">
             <input type="text" placeholder="Write a new comment" id="edit-comment">
-            <button> <img src="./assets/img/paper-plane.png" alt="paper-plane-icon"> Send</button>
+            <button @click="editFromApplly"> <img src="./assets/img/paper-plane.png" alt="paper-plane-icon"> Send</button>
+        </div>
+        <div class="card-form-delete" v-if="isRemove">
+            <p>Delete comment?</p>
+            <button>No</button>
+            <button id="card-form-delete-apply">Yes</button>
         </div>
       </div> 
       <comment
         @edit="editFrom"
         @remove="removeFrom"
         v-for="(comment, index) in comments"
+        v-bind:key=comment.id
         v-bind:id=comment.id
         v-bind:img=comment.img
 		    v-bind:content=comment.content
@@ -104,8 +114,7 @@ Vue.component('comment', {
 		title: String,
     content: String,
     id: String,
-
-    show: true
+    isActiveSeting: Boolean,
     
 	},
   methods:{
@@ -123,8 +132,8 @@ Vue.component('comment', {
 
   },
   template: `
-    <div class="card-comments" v-on:click="show = !show">
-      <div  class="setings"v-if="show">
+    <div class="card-comments" @click="isActiveSeting = !isActiveSeting" :class="{ active: isActiveSeting}">
+      <div  class="setings"v-if="isActiveSeting">
           <button @click="removeComment"> <img src="./assets/img/remove.png" alt="remove-icon"> remove</button>
           <button @click="editComment"> <img src="./assets/img/edit.png" alt="edit-icon"> edit</button>
       </div>

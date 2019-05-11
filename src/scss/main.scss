@@ -1,13 +1,21 @@
-
+body{
+  background: #F0F0F0;
+  font-family: 'Montserrat', sans-serif;
+}
 #comments{
   display: flex;
   justify-content: center;
+  .active{
+    background: #F0F0F0;
+  }
   .card{
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     max-width: 536px;
-    flex-wrap: nowrap;
-    
+    flex-wrap: nowrap;  
     .card-info{
       display: flex;
       align-items: center;
@@ -30,6 +38,9 @@
     .card-form{
       display: flex;
       flex-direction: column;
+      .card-form-active{
+        margin-bottom: 8px;
+      }
       .card-form-active,
       .card-form-edit{
         display: flex;
@@ -49,6 +60,26 @@
           color: #fff;
           border: none;
           border-radius: 5px;
+        }
+      }
+      .card-form-delete{
+        display: flex;
+        width: 100%;
+        background: #F0F0F0;
+        p{
+          width: 100%;
+          padding-left: 16px;
+        }
+        button{
+          margin-left: auto; 
+          padding: 17px 16px;
+          background: rgba(44, 59, 255, 1);
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+        }
+        button+button{
+          background: #FF0000;
         }
       }
     }
