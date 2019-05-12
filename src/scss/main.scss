@@ -27,6 +27,7 @@ body{
         margin-left: auto;
         padding: 8px 10px;
         font-size: 11px;
+        font-weight: 500;
         border-radius: 5px;
         background: linear-gradient(to right, #BEC2F3,#F7CAEB);
         font-family: monospace;
@@ -34,81 +35,114 @@ body{
           margin-right: 10px;
         }
       }
+      h3{
+        font-size: 20;
+        font-weight: normal;
+      }
     }
     .card-form{
       display: flex;
       flex-direction: column;
-      .card-form-active{
-        margin-bottom: 8px;
-      }
       .card-form-active,
       .card-form-edit{
         display: flex;
         width: 100%;
+        margin-bottom: 8px;
         input{
+          font-size: 16px;
+          z-index: 10;
           width: 100%;
-          border-radius: 5px;
+          border-radius: 5px 7px 7px 5px;
           border: 1px solid;
-          padding-left: 16px;
-          border-right: 2px solid rgba(44, 59, 255, 1);
+          padding: 15px 16px;
+        }
+        input:focus{
+          outline: none;
         }
         button{
+          z-index: 5;
           display: flex;
           flex-wrap: nowrap;
+          align-items: center;
           padding: 17px 16px;
           background: rgba(44, 59, 255, 1);
           color: #fff;
           border: none;
           border-radius: 5px;
-        }
-      }
-      .card-form-delete{
-        display: flex;
-        width: 100%;
-        background: #F0F0F0;
-        p{
-          width: 100%;
-          padding-left: 16px;
-        }
-        button{
-          margin-left: auto; 
-          padding: 17px 16px;
-          background: rgba(44, 59, 255, 1);
-          color: #fff;
-          border: none;
-          border-radius: 5px;
-        }
-        button+button{
-          background: #FF0000;
+          font-size: 11px;
+          font-weight: bold;
+          margin-left: -10px;
+          img{
+            padding: 0 10px;
+          }
         }
       }
     }
-    .card-comments{
-      
+    .card-comments{     
       display: flex;
       align-items: center;
+      padding: 8px 0;
       position: relative;
       img{
-        border-radius: 100%; 
-      }
-      .seting{
-        display: none;
-        transition: all 3s;
-
-        
+        border-radius: 100%;
+        margin-right: 16px; 
       }
       .setings{
         display: flex;
+        padding-left: 16px;
+        button{
+          display: flex;
+          color: #FF0000;
+          border: none;
+          background: none;
+          padding-right: 14px;
+          img{
+            border-radius: 0;
+            margin-right: 8px;
+          } 
+        }
+        button+button{
+          color:rgba(44, 59, 255, 1);
+        }
       }
+      
       .card-comments-text{
         display: flex;
         flex-direction: column;
-        padding: 16px;
         flex-wrap: nowrap;
+        white-space: nowrap;
+        overflow: hidden;
         p{
           margin: 0;
-          
+          font-size: 16px;
         }
+        span{
+          font-size: 11px;
+        }
+      }
+    }
+    .card-form-delete{
+      display: flex;
+      width: 100%;
+      background: #F0F0F0;
+      p{
+        width: 100%;
+        padding-left: 16px;
+        z-index: 10;
+      }
+      button{
+        z-index: 7;
+        margin-left: auto; 
+        padding: 17px 16px;
+        background: rgba(44, 59, 255, 1);
+        color: #fff;
+        border: none;
+        border-radius: 5px 7px 7px 5px;
+      }
+      button+button{
+        z-index: 5;
+        margin-left: -10px;
+        background: #FF0000;
       }
     } 
   }

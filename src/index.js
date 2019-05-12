@@ -32,22 +32,28 @@ Vue.component('landscape', {
         }
       ],
       isActive: false,
-      isRemove: false,
+      addCommentBtn: false,
+      addCommentVal: ''
     } 
+  },
+  watch: {
+    addCommentVal(val) {
+      this.addCommentBtn = (val) ? true : false;
+    }
   },
   methods:{ 
     addComment() {
-			if ($('#add-comment').val() == "" ) {
+			if ( this.addCommentVal == "" ) {
 				return;
 			}
       var itemAdd = {
         id: uuidv1(),
         title: 'WWII',
         img: './assets/img/jasonx2.png',
-        content: $('#add-comment').val()
+        content: this.addCommentVal
       }
       this.comments.unshift(itemAdd);
-      $('#add-comment').val('');
+      this.addCommentVal = ''
     },
     editFrom(comment) {     
       this.isActive = true
@@ -61,8 +67,7 @@ Vue.component('landscape', {
       
     },
     removeFrom(idComment) {
-      this.isRemove = true;
-      
+      this.isRemove = true
       this.comments =  this.comments.filter(function(el) {
           return el.id !== idComment
       })
@@ -79,17 +84,12 @@ Vue.component('landscape', {
       </div>
       <div class="card-form">
         <div class="card-form-active">
-            <input type="text" placeholder="Write a new comment" id="add-comment">
-            <button @click="addComment"> <img src="./assets/img/paper-plane.png" alt="paper-plane-icon"> Send</button>
+            <input type="text" placeholder="Write a new comment"  v-model="addCommentVal">
+            <button @click="addComment" v-if="addCommentBtn" id="comment-apply"> <img src="./assets/img/paper-plane.png" alt="paper-plane-icon"> Send</button>
         </div>
         <div class="card-form-edit" v-if="isActive">
             <input type="text" placeholder="Write a new comment" id="edit-comment">
             <button @click="editFromApplly"> <img src="./assets/img/paper-plane.png" alt="paper-plane-icon"> Send</button>
-        </div>
-        <div class="card-form-delete" v-if="isRemove">
-            <p>Delete comment?</p>
-            <button>No</button>
-            <button id="card-form-delete-apply">Yes</button>
         </div>
       </div> 
       <comment
@@ -113,10 +113,14 @@ Vue.component('comment', {
 		img: String,
 		title: String,
     content: String,
-    id: String,
-    isActiveSeting: Boolean,
-    
-	},
+    id: String,      
+  },
+  data: () => {
+    return {
+      isActiveSeting: false,
+      isRemove: true,
+    }
+  }, 
   methods:{
     openSetings(){
         $('.seting').css('display', 'block')
@@ -126,22 +130,35 @@ Vue.component('comment', {
       this.$emit('edit', this.content);
     },
     removeComment() {
-      this.$emit('remove', this.id);
+      this.$emit('remove', this.id);    
+    },
+    showWarning() {
+      this.isRemove = false
+    },
+    noRemoveComment() {
+      this.isRemove = true
     }
 
 
   },
   template: `
-    <div class="card-comments" @click="isActiveSeting = !isActiveSeting" :class="{ active: isActiveSeting}">
-      <div  class="setings"v-if="isActiveSeting">
-          <button @click="removeComment"> <img src="./assets/img/remove.png" alt="remove-icon"> remove</button>
-          <button @click="editComment"> <img src="./assets/img/edit.png" alt="edit-icon"> edit</button>
+  <div>
+    <div class="card-comments" v-if="isRemove" @click="isActiveSeting = !isActiveSeting" :class="{ active: isActiveSeting}">
+      <div  class="setings" v-if="isActiveSeting">
+          <button @click="showWarning"> <img src="./assets/img/remove.png" alt="remove-icon"> Remove</button>
+          <button @click="editComment"> <img src="./assets/img/edit.png" alt="edit-icon"> Edit</button>
       </div>
       <img  v-bind:src="img" alt="avatar">
       <div class="card-comments-text">
           <span>{{title}}</span>
           <p>{{content}}</p>
       </div>
+    </div>
+    <div class="card-form-delete" v-else>
+      <p>Delete comment?</p>
+      <button @click="noRemoveComment">No</button>
+      <button id="card-form-delete-apply" @click="removeComment">Yes</button>
+    </div>
   </div>
 `
 })
